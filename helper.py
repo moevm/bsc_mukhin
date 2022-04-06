@@ -3,6 +3,8 @@ import os
 
 import requests
 
+from repository import Repository
+
 zoom_url = 'https://zoom.us'
 client_id = os.environ['CLIENT_ID']
 redirect_uri = os.environ['REDIRECT_URI']
@@ -22,3 +24,7 @@ def request_access_token(code: str) -> dict:
         'redirect_uri': os.environ['REDIRECT_URI']+'/auth',
     }
     return requests.post(url=zoom_url+endpoint, headers=headers, params=query_parameters, timeout=5).json()
+
+
+async def get_repo(db_url=os.environ['DB_URL'], **kwargs):
+    return await Repository.create(db_url, **kwargs)
