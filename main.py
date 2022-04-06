@@ -1,11 +1,11 @@
-import os
 from urllib.parse import urlencode
 
 import requests
 from fastapi import FastAPI, status
 from fastapi.responses import RedirectResponse
 
-from helper import client_id, redirect_uri, request_access_token, zoom_url, get_repo
+from helper import (client_id, get_repo, redirect_uri, request_access_token,
+                    zoom_url)
 
 app = FastAPI()
 

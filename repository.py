@@ -1,7 +1,9 @@
-from sqlalchemy import SmallInteger, PrimaryKeyConstraint, Column, String, UniqueConstraint, BigInteger, DateTime, \
-    ForeignKeyConstraint, func, Integer, Boolean, create_engine
-from sqlalchemy.orm import declarative_base, sessionmaker, relationship
+from sqlalchemy import (BigInteger, Boolean, Column, DateTime,
+                        ForeignKeyConstraint, Integer, PrimaryKeyConstraint,
+                        SmallInteger, String, UniqueConstraint, create_engine,
+                        func)
 from sqlalchemy.dialects.sqlite import JSON
+from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 
 Base = declarative_base()
 
