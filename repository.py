@@ -80,14 +80,12 @@ class Repository:
             return Repository.instances[db_url]
 
         instance = cls()
-        engine = create_async_engine(db_url, **kwargs)
+        engine = create_engine(db_url, **kwargs)
 
-        if kwargs.get('create_scheme', False):
-            async with engine.begin() as conn:
-                await conn.run_sync(Base.metadata.create_all)
-        async_session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
+        Base.metadata.create_all(engine)
+        session = sessionmaker(engine, expire_on_commit=False)
 
-        setattr(instance, 'session', async_session)
+        setattr(instance, 'session', session)
         setattr(instance, 'engine', engine)
 
         cls.instances[db_url] = instance
