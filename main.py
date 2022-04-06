@@ -5,9 +5,14 @@ import requests
 from fastapi import FastAPI, status
 from fastapi.responses import RedirectResponse
 
-from helper import client_id, redirect_uri, request_access_token, zoom_url
+from helper import client_id, redirect_uri, request_access_token, zoom_url, get_repo
 
 app = FastAPI()
+
+
+@app.on_event('startup')
+async def startup():
+    await get_repo(echo=True, future=True)
 
 
 @app.get("/")
