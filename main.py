@@ -1,23 +1,59 @@
+from dataclasses import asdict
 from urllib.parse import urlencode
 
 import requests
+
 from fastapi import FastAPI, status
 from fastapi.responses import RedirectResponse
+from fastapi.security import HTTPBasic
+from fastapi.responses import FileResponse
+from starlette.middleware.cors import CORSMiddleware
 
-from helper import (client_id, get_repo, redirect_uri, request_access_token,
-                    zoom_url)
+from helper import (client_id, redirect_uri, request_access_token,
+                    zoom_url, Meeting)
+from montydb import set_storage, MontyClient
+
+set_storage('db', storage='sqlite')
+client = MontyClient('db', synchronous=1,
+                     automatic_index=False,
+                     busy_timeout=5000)
+work_with_meetings = client.db.meetings
+
 
 app = FastAPI()
+security = HTTPBasic()
+db = {}
 
-
-@app.on_event('startup')
-async def startup():
-    await get_repo(echo=True, future=True)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return FileResponse('static/index.html')
+
+
+@app.get('/api/v1/meetings')
+async def get_meetings():
+    return list(work_with_meetings.find({}, {'_id': False}))
+
+
+@app.delete('/api/v1/meetings/{meeting_id}')
+async def get_meeting_info(meeting_id: int):
+    work_with_meetings.delete_one({'id': meeting_id})
+    return {'success': True}
+
+
+@app.post('/api/v1/meetings')
+async def create_meeting(meeting_info: Meeting):
+    meet = asdict(meeting_info)
+    work_with_meetings.insert_one(meet.copy())
+    return {'success': True} | meet
 
 
 @app.get('/sign_in')

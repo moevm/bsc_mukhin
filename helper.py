@@ -1,9 +1,10 @@
 import base64
+import dataclasses
 import os
+from datetime import datetime
 
 import requests
 
-from repository import Repository
 
 zoom_url = 'https://zoom.us'
 client_id = os.environ['CLIENT_ID']
@@ -26,5 +27,9 @@ def request_access_token(code: str) -> dict:
     return requests.post(url=zoom_url+endpoint, headers=headers, params=query_parameters, timeout=5).json()
 
 
-async def get_repo(db_url=os.environ['DB_URL'], **kwargs):
-    return await Repository.create(db_url, **kwargs)
+@dataclasses.dataclass
+class Meeting:
+    id: int
+    name: str
+    date: datetime
+    host: str
