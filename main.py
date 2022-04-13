@@ -1,24 +1,14 @@
-from dataclasses import asdict
+from datetime import datetime
 from urllib.parse import urlencode
 
 import requests
-
-from fastapi import FastAPI, status
-from fastapi.responses import RedirectResponse
-from fastapi.security import HTTPBasic
-from fastapi.responses import FileResponse
+from fastapi import Depends, FastAPI, status
+from fastapi.responses import FileResponse, RedirectResponse
 from starlette.middleware.cors import CORSMiddleware
 
-from helper import (client_id, redirect_uri, request_access_token,
-                    zoom_url, Meeting)
-from montydb import set_storage, MontyClient
-
-set_storage('db', storage='sqlite')
-client = MontyClient('db', synchronous=1,
-                     automatic_index=False,
-                     busy_timeout=5000)
-work_with_meetings = client.db.meetings
-
+from helper import (Meeting, client_id, get_account_by_name, get_repo,
+                    redirect_uri, request_access_token, zoom_url)
+from repository import Account, Repository
 
 app = FastAPI()
 security = HTTPBasic()
