@@ -1,7 +1,9 @@
+from typing import Optional
+
 from sqlalchemy import (BigInteger, Boolean, Column, DateTime,
                         ForeignKeyConstraint, Integer, PrimaryKeyConstraint,
                         SmallInteger, String, UniqueConstraint, create_engine,
-                        func)
+                        delete, func, insert, select)
 from sqlalchemy.dialects.sqlite import JSON
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 
