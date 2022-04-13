@@ -1,10 +1,12 @@
 import base64
 import dataclasses
 import os
-from datetime import datetime
 
 import requests
+from fastapi import Depends, HTTPException, status
+from fastapi.security import HTTPBasic, HTTPBasicCredentials
 
+from repository import Account, Repository
 
 zoom_url = 'https://zoom.us'
 client_id = os.environ['CLIENT_ID']
