@@ -1,16 +1,17 @@
 import base64
 import dataclasses
 import os
+from datetime import datetime
 
 import requests
-from fastapi import Depends, HTTPException, status
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
+from fastapi.security import HTTPBasic
 
-from repository import Account, Repository
+from repository import Repository
 
 zoom_url = 'https://zoom.us'
 client_id = os.environ['CLIENT_ID']
 redirect_uri = os.environ['REDIRECT_URI']
+security = HTTPBasic()
 
 
 def request_access_token(code: str) -> dict:
@@ -30,8 +31,29 @@ def request_access_token(code: str) -> dict:
 
 
 @dataclasses.dataclass
-class Meeting:
-    id: int
+class MeetingConfig:
+    zoom_id: int
     name: str
-    date: datetime
+    interval_days: int
+    start_time: datetime
     host: str
+    login: str
+    password: str
+    is_active: bool = True
+
+
+@dataclasses.dataclass
+class ScheduledMeeting:
+    ts: datetime
+    status: str
+
+
+@dataclasses.dataclass
+class Log:
+    message: dict
+    ts: datetime
+    type: str
+
+
+def get_repo() -> Repository:
+    return Repository.create(os.environ['DB_URL'], echo=True)

@@ -1,18 +1,11 @@
-from datetime import datetime
-from urllib.parse import urlencode
-
-import requests
-from fastapi import Depends, FastAPI, status
-from fastapi.responses import FileResponse, RedirectResponse
+from fastapi import Depends, FastAPI
+from fastapi.responses import FileResponse
 from starlette.middleware.cors import CORSMiddleware
 
-from helper import (Meeting, client_id, get_account_by_name, get_repo,
-                    redirect_uri, request_access_token, zoom_url)
-from repository import Account, Repository
+from helper import (get_repo, MeetingConfig, ScheduledMeeting, Log)
+from repository import Repository
 
 app = FastAPI()
-security = HTTPBasic()
-db = {}
 
 app.add_middleware(
     CORSMiddleware,
@@ -23,44 +16,43 @@ app.add_middleware(
 )
 
 
+@app.on_event('startup')
+def on_startup():
+    get_repo()
+
+
 @app.get("/")
 async def root():
     return FileResponse('static/index.html')
 
 
-@app.get('/api/v1/meetings')
-async def get_meetings():
-    return list(work_with_meetings.find({}, {'_id': False}))
+@app.get('/api/v1/meeting_config')
+async def get_meetings(repo: Repository = Depends(get_repo)):
+    return repo.get_meetings()
 
 
-@app.delete('/api/v1/meetings/{meeting_id}')
-async def get_meeting_info(meeting_id: int):
-    work_with_meetings.delete_one({'id': meeting_id})
+@app.delete('/api/v1/meeting_config/{meeting_id}')
+async def change_meeting(meeting_id: int, repo: Repository = Depends(get_repo)):
+    repo.delete_meeting(meeting_id)
     return {'success': True}
 
 
-@app.post('/api/v1/meetings')
-async def create_meeting(meeting_info: Meeting):
-    meet = asdict(meeting_info)
-    work_with_meetings.insert_one(meet.copy())
-    return {'success': True} | meet
+@app.post('/api/v1/meeting_config')
+async def create_meeting_config(meeting_config: MeetingConfig, repo: Repository = Depends(get_repo)):
+    meeting_config.__dict__.pop('__initialised__')
+    repo.add_meeting_config(meeting_config.__dict__)
+    return {'success': True} | meeting_config.__dict__
 
 
-@app.get('/sign_in')
-async def sign_in():
-    params = {'response_type': 'code', 'client_id': client_id, 'redirect_uri': redirect_uri}
-    endpoint = '/oauth/authorize'
-    redirect_url = f'{zoom_url}{endpoint}?{urlencode(params)}/auth'
-    return RedirectResponse(redirect_url, status_code=status.HTTP_302_FOUND)
+@app.post('/api/v1/scheduled_meeting/{meeting_config_id}')
+async def create_scheduled_meeting(zoom_id: int, config: ScheduledMeeting, repo: Repository = Depends(get_repo)):
+    config.__dict__.pop('__initialised__')
+    repo.add_scheduled_meeting(zoom_id, config.__dict__)
+    return {'success': True} | config.__dict__
 
 
-@app.get("/auth")
-async def auth(code: str):
-    response = request_access_token(code)
-    if response.get('reason') == 'Invalid authorization code':
-        return {'error': 'authorization code is expired'}
-    token = response['access_token']
-    get_meetings_url = 'https://api.zoom.us/v2/users/me/meetings'
-    headers = {'Authorization': f'Bearer {token}'}
-    meetings = requests.get(get_meetings_url, params={'page_size': 300}, headers=headers)
-    return meetings.json()
+@app.post('/api/v1/log/{scheduled_meeting_id}')
+async def create_log(scheduled_meeting_id: int, log: Log, repo: Repository = Depends(get_repo)):
+    log.__dict__.pop('__initialised__')
+    repo.add_log(scheduled_meeting_id, log.__dict__)
+    return {'success': True} | log.__dict__
