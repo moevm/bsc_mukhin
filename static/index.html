@@ -18,29 +18,31 @@
                     <table class="pure-table">
                         <thead>
                             <tr>
-                                <th>ID встречи</th>
-                                <th>Имя</th>
-                                <th>Дата</th>
-                                <th>Хост</th>
+                                <template v-for="header in table_headers">
+                                    <th>{{header.title}}</th>
+                                </template>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr v-for="meeting in meetings">
-                                <td>{{meeting.id}}</td>
-                                <td>{{meeting.name}}</td>
-                                <td>{{meeting.date}}</td>
-                                <td>{{meeting.host}}</td>
-                                <td v-on:click="on_delete_meeting(meeting.id)"><button class="pure-button pure-button-primary">Удалить</button></td>
+                                <template v-for="header in table_headers">
+                                    <template v-if="header.name == 'name'">
+                                        <td><a v-on:click="on_logs(meeting.scheduled_meetings)" href="#">{{meeting[header.name]}}</a></td>
+                                    </template>
+                                    <template v-else>
+                                        <td>{{meeting[header.name]}}</td>
+                                    </template>
+                                </template>
+                                <td v-on:click="on_delete_meeting(meeting.zoom_id)"><button class="pure-button pure-button-primary">Удалить</button></td>
                             </tr>
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td>-</td>
-                                <td><a href="?route=create">Добавить</a></td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
+                                <template v-for="header in table_headers">
+                                    <td>-</td>
+                                </template>
+                                <td><a class="pure-button pure-button-primary" href="?route=create">Добавить</a></td>
                             </tr>
                         </tfoot>
                     </table>
@@ -54,19 +56,17 @@
                         <table class="pure-table">
                             <thead>
                                 <tr>
-                                    <th>ID встречи</th>
-                                    <th>Имя</th>
-                                    <th>Дата</th>
-                                    <th>Хост</th>
+                                    <th>Параметр</th>
+                                    <th>Значение</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><input type="number" name="id"></input></td>
-                                    <td><input type="text" name="name"></input></td>
-                                    <td><input type="datetime-local" name="date"></input></td>
-                                    <td><input type="text" name="host"></input></td>
-                                </tr>
+                                <template v-for="header in table_headers">
+                                    <tr>
+                                        <td>{{header.title}}</td>
+                                        <td><input v-bind:type="header.type" v-bind:name="header.name"></input></td>
+                                    </tr>
+                                </template>
                             </tbody>
                         </table>
                     <br>
@@ -76,7 +76,6 @@
                 </div>
             </template>
         </div>
-        <div class="pure-u-1-5"></div>
     </div>
 
     <script>
@@ -84,8 +83,17 @@
             el: "#app",
             data() {
                 return {
-                    API_URL: 'http://172.18.19.22',
-                    test: 123,
+                    table_headers: [
+                        {'title': 'ID встречи', 'name': 'zoom_id', 'type': 'number'},
+                        {'title': 'Название', 'name': 'name', 'type': 'text'},
+                        {'title': 'Дата начала', 'name': 'start_time', 'type': 'datetime-local'},
+                        {'title': 'Интервал', 'name': 'interval_days', 'type': 'number'},
+                        {'title': 'Хост', 'name': 'host', 'type': 'text'},
+                        //{'title': 'Активна ли?', 'name': 'is_active', 'type': 'checkbox'},
+                        {'title': 'Логин', 'name': 'login', 'type': 'text'},
+                        {'title': 'Пароль', 'name': 'password', 'type': 'text'},
+                    ],
+                    API_URL: 'http://45.132.18.75:7667',
                     meetings: [],
                     urlParams: {},
                     route: '',
@@ -95,7 +103,7 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 this.route = urlParams.get('route') || 'meetings';
 
-                const resp = await fetch(`${this.API_URL}/api/v1/meetings`);
+                const resp = await fetch(`${this.API_URL}/api/v1/meeting_config`);
                 if (resp.status == 200) {
                     const meetings = await resp.json();
                     this.meetings = meetings;
@@ -103,7 +111,7 @@
             },
             methods: {
                 on_delete_meeting: async function(meeting_id) {
-                    let resp = await fetch(`${this.API_URL}/api/v1/meetings/${meeting_id}`, {
+                    let resp = await fetch(`${this.API_URL}/api/v1/meeting_config/${meeting_id}`, {
                         'method': 'DELETE',
                         'headers': {
                             'Accept': 'application/json',
@@ -124,7 +132,11 @@
                         object[key] = value;
                     }
 
-                    await fetch(`${this.API_URL}/api/v1/meetings`, {
+                    // XXX: Cast some fields to propper types
+                    object['is_active'] = (object['is_active'] === 'on');
+                    object['interval_days'] = +object['interval_days'];
+
+                    await fetch(`${this.API_URL}/api/v1/meeting_config`, {
                         'method': 'POST',
                         'headers': {
                             'Content-Type': 'application/json',
@@ -132,6 +144,9 @@
                         'body': JSON.stringify(object),
                     });
                     document.querySelector('#btn_back').click();
+                },
+                on_logs: async function(text) {
+                    alert(JSON.stringify(text, null, 2));
                 },
             },
         })
