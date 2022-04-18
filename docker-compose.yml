@@ -12,4 +12,4 @@ services:
     env_file:
       - .env
     volumes:
-      - /zoom/db.sqlite:/zoom/db.sqlite
+      - /bsc_mukhin/db.sqlite:/zoom/db.sqlite
