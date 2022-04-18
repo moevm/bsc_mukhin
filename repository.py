@@ -106,7 +106,12 @@ class Repository:
 
     def add_meeting_config(self, meeting_config: dict):
         with self.session() as session:
-            session.execute(insert(MeetingConfig).values(meeting_config))
+            result = session.execute(insert(MeetingConfig).values(meeting_config))
+            session.execute(insert(ScheduledMeeting).values({
+                'meeting_config_id': result.lastrowid,
+                'ts': meeting_config['start_time'],
+                'status': 'fresh',
+            }))
             session.commit()
 
     def add_scheduled_meeting(self, zoom_id: int, scheduled_meeting: dict):
