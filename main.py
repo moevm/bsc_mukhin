@@ -11,8 +11,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=['*'],
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=['*'],
+    allow_headers=['*'],
 )
 
 
@@ -21,7 +21,7 @@ def on_startup():
     get_repo()
 
 
-@app.get("/")
+@app.get('/')
 async def root():
     return FileResponse('static/index.html')
 
