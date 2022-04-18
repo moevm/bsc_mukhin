@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      network: host
+    container_name: api
+    restart: unless-stopped
+    command: python -m uvicorn main:app --host 0.0.0.0 --port 80
+    env_file:
+      - .env
+    volumes:
+      - /zoom/db.sqlite:/zoom/db.sqlite
