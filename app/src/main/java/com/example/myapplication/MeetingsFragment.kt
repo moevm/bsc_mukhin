@@ -24,6 +24,19 @@ class MeetingsFragment : Fragment(R.layout.fragment_meetings) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        view.TextViewName.setOnClickListener {
+            findNavController().navigate(R.id.action_meetingsFragment_to_eventFragment)
+        }
+
+        view.TextViewParticipants.setOnClickListener {
+            findNavController().navigate(R.id.action_meetingsFragment_to_participantsFragment)
+        }
+
+        view.btnToHistory.setOnClickListener {
+            findNavController().navigate(R.id.action_meetingsFragment_to_meetingsHistoryFragment)
+        }
+
         view.btnAdd.setOnClickListener {
             findNavController().navigate(R.id.action_meetingsFragment_to_fragmentAddMeeting)
         }

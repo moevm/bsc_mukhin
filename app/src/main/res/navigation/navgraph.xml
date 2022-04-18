@@ -13,6 +13,15 @@
         <action
             android:id="@+id/action_meetingsFragment_to_fragmentAddMeeting"
             app:destination="@id/fragmentAddMeeting" />
+        <action
+            android:id="@+id/action_meetingsFragment_to_eventFragment"
+            app:destination="@id/eventFragment" />
+        <action
+            android:id="@+id/action_meetingsFragment_to_meetingsHistoryFragment"
+            app:destination="@id/meetingsHistoryFragment" />
+        <action
+            android:id="@+id/action_meetingsFragment_to_participantsFragment"
+            app:destination="@id/participantsFragment" />
     </fragment>
     <fragment
         android:id="@+id/fragmentAddMeeting"
@@ -21,6 +30,32 @@
         tools:layout="@layout/fragment_add_meeting" >
         <action
             android:id="@+id/action_fragmentAddMeeting_to_meetingsFragment"
+            app:destination="@id/meetingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventFragment"
+        android:name="com.example.myapplication.EventFragment"
+        android:label="fragment_event"
+        tools:layout="@layout/fragment_event" >
+        <action
+            android:id="@+id/action_eventFragment_to_meetingsFragment"
+            app:destination="@id/meetingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/meetingsHistoryFragment"
+        android:name="com.example.myapplication.MeetingsHistoryFragment"
+        android:label="fragment_meetings_history"
+        tools:layout="@layout/fragment_meetings_history" >
+        <action
+            android:id="@+id/action_meetingsHistoryFragment_to_meetingsFragment"
+            app:destination="@id/meetingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/participantsFragment"
+        android:name="com.example.myapplication.ParticipantsFragment"
+        android:label="ParticipantsFragment" >
+        <action
+            android:id="@+id/action_participantsFragment_to_meetingsFragment"
             app:destination="@id/meetingsFragment" />
     </fragment>
 </navigation>

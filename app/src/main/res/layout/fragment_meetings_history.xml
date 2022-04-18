@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".FragmentAddMeeting"
+    android:id="@+id/tableLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:shrinkColumns="*"
+    android:stretchColumns="*"
+    android:paddingTop="50dp">
+
+    <TableRow
+        android:id="@+id/tableRow7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal" >
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_span="6"
+            android:gravity="center"
+            android:text="История"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:typeface="serif" >
+        </TextView>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:textStyle="bold"
+            android:id="@+id/id"
+            android:text="ID Встречи"
+            android:layout_gravity="center">
+        </TextView>
+
+        <TextView
+            android:id="@+id/TextView04"
+            android:text="Имя"
+            android:textStyle="bold"
+            android:typeface="serif"
+            android:layout_gravity="center">
+        </TextView>
+
+        <TextView
+            android:id="@+id/TextView03"
+            android:text="Дата"
+            android:textStyle="bold"
+            android:typeface="serif"
+            android:layout_gravity="center">
+        </TextView>
+
+        <TextView
+            android:id="@+id/TextView02"
+            android:text="Хост"
+            android:textStyle="bold"
+            android:typeface="serif"
+            android:layout_gravity="center">
+        </TextView>
+
+        <TextView
+            android:id="@+id/TextView05"
+            android:text="Статус"
+            android:textStyle="bold"
+            android:typeface="serif"
+            android:layout_gravity="center">
+        </TextView>
+
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:text="1"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="Илья"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="18.04.2022"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="Илья"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="Отмена"
+            android:textColor="#ff0000"
+            android:gravity="center"/>
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:text="2"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="Пётр"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="18.04.2022"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="Пётр"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="Проведена"
+            android:textColor="#00ff00"
+            android:gravity="center"/>
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:text="3"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="Илья"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="18.04.2022"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="Илья"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="Проведена"
+            android:textColor="#00ff00"
+            android:gravity="center"/>
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:text="4"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="Павел"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="18.04.2022"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="Павел"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="Отмена"
+            android:textColor="#ff0000"
+            android:gravity="center"/>
+
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:text="5"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="Илья"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="18.04.2022"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="Илья"
+            android:gravity="center"/>
+
+        <TextView
+            android:text="Отмена"
+            android:textColor="#ff0000"
+            android:gravity="center"/>
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/btnRow">
+        <TextView/>
+        <TextView/>
+        <TextView/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnBack"
+            android:text="Назад"/>
+    </TableRow>
+
+</TableLayout>

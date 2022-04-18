@@ -7,7 +7,27 @@
     android:layout_height="match_parent"
     android:shrinkColumns="*"
     android:stretchColumns="*"
-    android:paddingTop="50dp">
+    android:paddingTop="10dp">
+
+    <LinearLayout android:layout_height="40dp"
+        android:layout_width="match_parent">
+
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_baseline_search_24"/>
+        <EditText
+            android:layout_height="match_parent"
+            android:layout_width="200dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnToHistory"
+            android:text="История"/>
+
+
+    </LinearLayout>
 
     <TableRow
         android:id="@+id/tableRow4"
@@ -66,7 +86,7 @@
 
         <TextView
             android:id="@+id/TextView01"
-            android:text="___"
+            android:text="Участники"
             android:textStyle="bold"
             android:typeface="serif"
             android:layout_gravity="center">
@@ -88,7 +108,8 @@
 
         <TextView
             android:id="@+id/TextViewName"
-            android:text="Иия"
+            android:text="Лекция"
+            android:textColor="#0000ff"
             android:textStyle="bold"
             android:typeface="serif"
             android:layout_gravity="center">
@@ -111,8 +132,9 @@
         </TextView>
 
         <TextView
-            android:id="@+id/TextViewSmth"
-            android:text="___"
+            android:id="@+id/TextViewParticipants"
+            android:text="20/40"
+            android:textColor="#0000ff"
             android:textStyle="bold"
             android:typeface="serif"
             android:layout_gravity="center">
