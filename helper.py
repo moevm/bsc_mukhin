@@ -8,9 +8,6 @@ from fastapi.security import HTTPBasic
 
 from repository import Repository
 
-zoom_url = 'https://zoom.us'
-client_id = os.environ['CLIENT_ID']
-redirect_uri = os.environ['REDIRECT_URI']
 security = HTTPBasic()
 
 
