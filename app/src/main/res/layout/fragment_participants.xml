@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp">
+
+    <TextView
+        android:text="Список участников"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textSize="30sp"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textStyle="bold"
+        android:typeface="serif"
+        android:layout_gravity="center"
+        android:text="Вася"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textStyle="bold"
+        android:typeface="serif"
+        android:layout_gravity="center"
+        android:text="Боря"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textStyle="bold"
+        android:id="@+id/id"
+        android:text="Петя"
+        android:layout_gravity="center">
+    </TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/TextView04"
+        android:text="Дима"
+        android:textStyle="bold"
+        android:typeface="serif"
+        android:layout_gravity="center">
+    </TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/TextView03"
+        android:text="Антон"
+        android:textStyle="bold"
+        android:typeface="serif"
+        android:layout_gravity="center">
+    </TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/TextView02"
+        android:text="Нина"
+        android:textStyle="bold"
+        android:typeface="serif"
+        android:layout_gravity="center">
+    </TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/TextView01"
+        android:text="Володя"
+        android:textStyle="bold"
+        android:typeface="serif"
+        android:layout_gravity="center">
+    </TextView>
+
+    <Button
+        android:id="@+id/btnParticipantsBack"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Назад"/>
+
+</LinearLayout>
